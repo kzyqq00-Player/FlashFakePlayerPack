@@ -6,34 +6,29 @@ import {
 
 
 //逆码的，乱起来了
-import { SimulatedPlayer,
-} from "@minecraft/server-gametest";
+import { SimulatedPlayer } from "@minecraft/server-gametest";
 
 import {
-    Location,
     BlockLocation
 } from "../lib/xboyPackage/The law of the ancestors is immutable";
-
-
-
 
 /**
  * Manages callbacks that are connected to a reloadFromCmd event.
  */
-export class reloadFromCmdEventSignal {
+export class ReloadFromCmdEventSignal {
     /**
      * @remarks
      * Adds a callback that will be called on every reload from command.
      * @param callback
      */
-    subscribe(callback: (arg: reloadFromCmdEvent) => void): void;
+    subscribe(callback: (arg: ReloadFromCmdEvent) => void): void;
     /**
      * @remarks
      * Removes a callback from being called every reload from command.
      * @param callback
      * @throws This function can throw errors.
      */
-    unsubscribe(callback: (arg: reloadFromCmdEvent) => void): void;
+    unsubscribe(callback: (arg: ReloadFromCmdEvent) => void): void;
     /**
      * @remarks
      * Trigger a callback from being called every reload from command.
@@ -46,12 +41,7 @@ export class reloadFromCmdEventSignal {
 /**
  * An event for reloadFromCmd, that fires when reload from command.
  */
-export class reloadFromCmdEvent {
-}
-
-
-
-
+export class ReloadFromCmdEvent {}
 
 /**
  * xBoyMinemc
@@ -160,8 +150,6 @@ export class FishingHookDespawnedEventSignal {
     /**
      * @remarks
      * Adds a callback that will be called when a FishingHook Despawned.
-     * @param callback
-     * @param options?: EntityEventOptions
      */
     subscribe(callback: (arg: FishingHookDespawnedEvent) => void, options?: EntityEventOptions): (arg: FishingHookDespawnedEvent) => void;
     /**
@@ -180,8 +168,6 @@ export  class initializedEventSignal {
     /**
      * @remarks
      * Adds a callback that will be called when this initialized.
-     * @param callback
-     * @param options?: initializedEvent
      */
     subscribe(callback: (arg: initializedEvent) => void): (arg: initializedEvent) => void;
     /**

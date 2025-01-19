@@ -1,9 +1,9 @@
 // SIGN for AUTO_BEHAVIOR
-import { SimulatedPlayer, LookDuration } from '@minecraft/server-gametest'
-import { Player } from '@minecraft/server'
-import { commandRegistry as urm } from '../../xTerrain/plugins/youAreMine'
+import {SimulatedPlayer, LookDuration} from '@minecraft/server-gametest'
+import {Player} from '@minecraft/server'
+import {commandRegistry as urm} from '../../xTerrain/plugins/youAreMine'
 
-export  enum  SIGN {
+export enum SIGN {
     AUTO_BREAKBLOCK_SIGN = 'AUTO_BREAKBLOCK_SIGN',
     ATTACK_SIGN = 'ATTACK_SIGN',
     AUTO_ATTACK_SIGN = 'AUTO_ATTACK_SIGN',
@@ -13,10 +13,12 @@ export  enum  SIGN {
     AUTO_RESPAWN_SIGN = 'AUTO_RESPAWN_SIGN',
     YUME_SIM_SIGN = 'YUME_SIM_SIGN',    //'#yumeSimSign#',
 }
-export  default SIGN
 
-export const SIGN_TAG_LIST:string[]  = Object.keys(SIGN)
-export enum  SIGN_ZH {
+export default SIGN
+
+export const SIGN_TAG_LIST: string[] = Object.keys(SIGN)
+
+export enum SIGN_ZH {
     AUTO_BREAKBLOCK_SIGN = '自动挖掘标签',
     ATTACK_SIGN = '攻击标签',
     AUTO_ATTACK_SIGN = '自动攻击标签',
@@ -29,7 +31,7 @@ export enum  SIGN_ZH {
 
 
 // SIGN for normal BEHAVIOR
-export enum  BEHAVIOR {
+export enum BEHAVIOR {
     lookAtEntity = 'lookAtEntity',
     teleport = 'teleport',
     useAndStopUsingItem = 'useAndStopUsingItem',
@@ -44,8 +46,9 @@ export enum  BEHAVIOR {
     // rename = 'rename',
 }
 
-export const BEHAVIOR_LIST:string[] = Object.keys(BEHAVIOR)
-export enum  BEHAVIOR_ZH {
+export const BEHAVIOR_LIST: string[] = Object.keys(BEHAVIOR)
+
+export enum BEHAVIOR_ZH {
     lookAtEntity = '扭头',
     teleport = '移动',
     useAndStopUsingItem = '使用',
@@ -62,17 +65,17 @@ export enum  BEHAVIOR_ZH {
 
 export const BEHAVIOR_FUNCTION = {
     // @ts-ignore
-    lookAtEntity : (sim:SimulatedPlayer,player:Player)=>sim.lookAtEntity(player,LookDuration.Instant),
-    teleport : (sim:SimulatedPlayer,player:Player)=>sim.teleport(player.location),
-    useAndStopUsingItem : (sim:SimulatedPlayer&Player)=>sim.useItemInSlot(sim.selectedSlotIndex) && sim.stopUsingItem(),
-    useItemInSlot : (sim:SimulatedPlayer&Player)=>sim.useItemInSlot(sim.selectedSlotIndex),
-    stopUsingItem : (sim:SimulatedPlayer)=>sim.stopUsingItem(),
-    interact : (sim:SimulatedPlayer)=>sim.interact(),
-    swapMainhandItem : (sim:SimulatedPlayer,player:Player)=>urm.execute('假人主手物品交换',{entity:player,sim}),
-    swapInventory : (sim:SimulatedPlayer,player:Player)=>urm.execute('假人背包交换',{entity:player,sim}),
-    swapEquipment : (sim:SimulatedPlayer,player:Player)=>urm.execute('假人装备交换',{entity:player,sim}),
-    recycle : (sim:SimulatedPlayer,player:Player)=>urm.execute('假人资源回收',{entity:player,sim}), // item and exp
-    disconnect : (sim:SimulatedPlayer)=>urm.execute('假人销毁',{sim}),
+    lookAtEntity: (sim: SimulatedPlayer, player: Player) => sim.lookAtEntity(player, LookDuration.Instant),
+    teleport: (sim: SimulatedPlayer, player: Player) => sim.teleport(player.location),
+    useAndStopUsingItem: (sim: SimulatedPlayer & Player) => sim.useItemInSlot(sim.selectedSlotIndex) && sim.stopUsingItem(),
+    useItemInSlot: (sim: SimulatedPlayer & Player) => sim.useItemInSlot(sim.selectedSlotIndex),
+    stopUsingItem: (sim: SimulatedPlayer) => sim.stopUsingItem(),
+    interact: (sim: SimulatedPlayer) => sim.interact(),
+    swapMainhandItem: (sim: SimulatedPlayer, player: Player) => urm.execute('假人主手物品交换', {entity: player, sim}),
+    swapInventory: (sim: SimulatedPlayer, player: Player) => urm.execute('假人背包交换', {entity: player, sim}),
+    swapEquipment: (sim: SimulatedPlayer, player: Player) => urm.execute('假人装备交换', {entity: player, sim}),
+    recycle: (sim: SimulatedPlayer, player: Player) => urm.execute('假人资源回收', {entity: player, sim}), // item and exp
+    disconnect: (sim: SimulatedPlayer) => urm.execute('假人销毁', {sim}),
     // rename : (sim:SimulatedPlayer,player:Player)=>0,
 }
 export const exeBehavior = (behavior: string) => BEHAVIOR[behavior] && BEHAVIOR_FUNCTION[behavior]

@@ -23,21 +23,21 @@ import {
 
 
 
-const GetScoreBoard    : Scoreboard = world.scoreboard;
+const getScoreBoard    : Scoreboard = world.scoreboard;
 //@ts-ignore
-const GetScoreObject    = ( Objective:ScoreboardObjective | String=undefined) : ScoreboardObjective|ScoreboardObjective[] => typeof Objective === "undefined" ? GetScoreBoard.getObjectives() : typeof Objective === "string" ?  GetScoreBoard.getObjective(Objective) : Objective ;
+const getScoreObject    = ( Objective:ScoreboardObjective | String=undefined) : ScoreboardObjective|ScoreboardObjective[] => typeof Objective === "undefined" ? getScoreBoard.getObjectives() : typeof Objective === "string" ?  getScoreBoard.getObjective(Objective) : Objective ;
 
 // 这是什么玩意
 // @ts-ignore
-const GetScorePartic    = (args: Entity | ScoreboardObjective ) : Entity|ScoreboardIdentity[]=>  args ? (args.dimension?Array.from(GetScoreBoard.getParticipants()).find(Participant=>Participant.getEntity()==args):args[0].getParticipants()) : GetScoreBoard.getParticipants();
+const getScoreParti    = (args: Entity | ScoreboardObjective ) : Entity|ScoreboardIdentity[]=>  args ? (args.dimension?Array.from(getScoreBoard.getParticipants()).find(Participant=>Participant.getEntity()==args):args[0].getParticipants()) : getScoreBoard.getParticipants();
 // @ts-ignore
-const GetScorePoints    = (object : ScoreboardObjective|string,partic: Entity | ScoreboardIdentity | string) : number =>  (<ScoreboardObjective>GetScoreObject(object)).getScore(partic);
+const getScorePoints    = (object : ScoreboardObjective|string,partic: Entity | ScoreboardIdentity | string) : number =>  (<ScoreboardObjective>getScoreObject(object)).getScore(partic);
 
 // @ts-ignore
-const AssScoreObject    = (ObjName: string) : ScoreboardObjective|undefined=> GetScoreObject().find((scoreboard : { id: string; })=>{if(scoreboard .id === ObjName)return true});
+const assScoreObject    = (ObjName: string) : ScoreboardObjective|undefined=> getScoreObject().find((scoreboard : { id: string; })=>{if(scoreboard .id === ObjName)return true});
 
-// const AssScorePartic    = (...args: any[])=>{return args.length === 2 ? args[1].getParticipants().find((participant: { displayName: string;id: number; })=>{if(participant.displayName === args[0])return true}) : GetScorePartic().find((participant: { displayName: string; })=>{if(participant.displayName === args[0])return true})};
-const AssScorePartic    = (participant: Entity | ScoreboardIdentity | string, ScoreObject:ScoreboardObjective)=> ScoreObject.hasParticipant(participant) ;
+// const assScoreParti    = (...args: any[])=>{return args.length === 2 ? args[1].getParticipants().find((participant: { displayName: string;id: number; })=>{if(participant.displayName === args[0])return true}) : getScoreParti().find((participant: { displayName: string; })=>{if(participant.displayName === args[0])return true})};
+const assScoreParti    = (participant: Entity | ScoreboardIdentity | string, ScoreObject:ScoreboardObjective)=> ScoreObject.hasParticipant(participant) ;
 
 
 ///scoreboard objectives remove testObjectName
@@ -49,14 +49,14 @@ const AssScorePartic    = (participant: Entity | ScoreboardIdentity | string, Sc
 
 // const DelScoreObject_    = (ObjName: string & ScoreboardObjective)=> overworld.runCommand(`scoreboard objectives remove `+ (ObjName?.id || ObjName) );
 
-const DelScoreObject    = (objectiveId: ScoreboardObjective | string)=> world.scoreboard.removeObjective(objectiveId);
+const delScoreObject    = (objectiveId: ScoreboardObjective | string)=> world.scoreboard.removeObjective(objectiveId);
 
 // const NewScoreObject_    = (ObjName: string,DisplayName:string,dummy:string='dummy')=> overworld.runCommand(`scoreboard objectives add ${ObjName} ${dummy} ${DisplayName}`);
 
-const NewScoreObject    = (objectiveId: string, displayName: string=objectiveId)=> GetScoreBoard.addObjective(objectiveId, displayName);
+const newScoreObject    = (objectiveId: string, displayName: string=objectiveId)=> getScoreBoard.addObjective(objectiveId, displayName);
 //scoreboard objectives setDisplay list ScoreName ascending
 //@ts-ignore
-const DisScoreObject    = (displaySlotId:DisplaySlotId, objective: ScoreboardObjective=undefined, sortOrder: ObjectiveSortOrder=('ascending'&&0))=> objective ? world.scoreboard.setObjectiveAtDisplaySlot(displaySlotId,  {objective,sortOrder}) : world.scoreboard.clearObjectiveAtDisplaySlot(displaySlotId);
+const disScoreObject    = (displaySlotId:DisplaySlotId, objective: ScoreboardObjective=undefined, sortOrder: ObjectiveSortOrder=('ascending'&&0))=> objective ? world.scoreboard.setObjectiveAtDisplaySlot(displaySlotId,  {objective,sortOrder}) : world.scoreboard.clearObjectiveAtDisplaySlot(displaySlotId);
 // scoreBase
 
 ///scoreboard players add "Xboy minemc" testObjectName 3
@@ -68,7 +68,7 @@ const DisScoreObject    = (displaySlotId:DisplaySlotId, objective: ScoreboardObj
 
 
 // 不再被推荐和维护
-const AddScorePoints    = (ScoreObject:ScoreboardObjective|string,  participant: Entity | ScoreboardIdentity | string,  scoreToAdd: number )=> GetScoreObject(ScoreObject).addScore(participant,scoreToAdd);
+const addScorePoints    = (ScoreObject:ScoreboardObjective|string,  participant: Entity | ScoreboardIdentity | string,  scoreToAdd: number )=> getScoreObject(ScoreObject).addScore(participant,scoreToAdd);
 
 
 
@@ -77,39 +77,39 @@ const AddScorePoints    = (ScoreObject:ScoreboardObjective|string,  participant:
 // No longer recommended and maintained
 // 不再被推荐和维护
 // @ts-ignore
-const SetScorePoints     = (ScoreObject:ScoreboardObjective|string,  participant: Entity | ScoreboardIdentity | string, score: number): void=>GetScoreObject(ScoreObject).setScore(participant,score);
+const setScorePoints     = (ScoreObject:ScoreboardObjective|string,  participant: Entity | ScoreboardIdentity | string, score: number): void=>getScoreObject(ScoreObject).setScore(participant,score);
 
-const ScoreBase = {
-        GetObject : GetScoreObject,
-        GetPartic : GetScorePartic,
-        GetPoints : GetScorePoints,
-        AssObject : AssScoreObject,
-        AssPartic : AssScorePartic,
-        DelObjectAsync : DelScoreObject,
-        NewObjectAsync : NewScoreObject,
-        DelObject : DelScoreObject,
-        NewObject : NewScoreObject,
-        DisObject : DisScoreObject,
-        AddPointsAsync : AddScorePoints,
-        SetPointsAsync : SetScorePoints,
-        AddPoints : AddScorePoints,
-        SetPoints : SetScorePoints
+const scoreBase = {
+        getObject : getScoreObject,
+        getParti : getScoreParti,
+        getPoints : getScorePoints,
+        assObject : assScoreObject,
+        assParti : assScoreParti,
+        delObjectAsync : delScoreObject,
+        newObjectAsync : newScoreObject,
+        delObject : delScoreObject,
+        newObject : newScoreObject,
+        disObject : disScoreObject,
+        addPointsAsync : addScorePoints,
+        setPointsAsync : setScorePoints,
+        addPoints : addScorePoints,
+        setPoints : setScorePoints
 }
-export default ScoreBase;
+export default scoreBase;
 
 // const ScoreBase = {
-//     GetScoreObject : GetScoreObject,
-//     GetScorePartic : GetScorePartic,
-//     GetScorePoints : GetScorePoints,
-//     AssScoreObject : AssScoreObject,
-//     AssScorePartic : AssScorePartic,
-//     DelScoreObjectAsync : DelScoreObject,
-//     NewScoreObjectAsync : NewScoreObject,
-//     DelScoreObject : DelScoreObject,
-//     NewScoreObject : NewScoreObject,
-//     DisScoreObject : DisScoreObject,
-//     AddScorePointsAsync : AddScorePoints,
-//     SetScorePointsAsync : SetScorePoints,
-//     AddScorePoints : AddScorePoints,
-//     SetScorePoints : SetScorePoints
+//     getScoreObject : getScoreObject,
+//     getScoreParti : getScoreParti,
+//     getScorePoints : getScorePoints,
+//     assScoreObject : assScoreObject,
+//     assScorePartic : assScorePartic,
+//     DelScoreObjectAsync : delScoreObject,
+//     NewScoreObjectAsync : newScoreObject,
+//     delScoreObject : delScoreObject,
+//     newScoreObject : newScoreObject,
+//     disScoreObject : disScoreObject,
+//     AddScorePointsAsync : addScorePoints,
+//     SetScorePointsAsync : setScorePoints,
+//     addScorePoints : addScorePoints,
+//     setScorePoints : setScorePoints
 // }

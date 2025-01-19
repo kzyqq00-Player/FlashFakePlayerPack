@@ -1,27 +1,25 @@
 import { CommandRegistry } from '../../lib/yumeCommand/CommandRegistry'
 import { world, type ScoreboardObjective } from '@minecraft/server'
-import ScoreBase from '../../lib/xboyPackage/scoreBase/rw'
-
+import scoreBase from '../../lib/xboyPackage/scoreBase/rw'
 
 const commandRegistry: CommandRegistry = new CommandRegistry()
-
 
 commandRegistry.registerAlias('假人重置编号','假人重置序号')
 commandRegistry.registerAlias('假人编号重置','假人重置序号')
 commandRegistry.registerAlias('假人序号重置','假人重置序号')
 commandRegistry.registerCommand('假人重置序号', ({ entity }) => {
 
-    const SetPID = (PID:number=1)=>{
-        const __FlashPlayer__ = <ScoreboardObjective>ScoreBase.GetObject('##FlashPlayer##')
+    const setPID = (PID:number=1)=>{
+        const __flashPlayer = <ScoreboardObjective>scoreBase.getObject('##FlashPlayer##')
 
-        const value = ScoreBase.GetPoints(__FlashPlayer__,'##currentPID')
+        const value = scoreBase.getPoints(__flashPlayer,'##currentPID')
 
-              __FlashPlayer__.setScore('##currentPID',PID)
+              __flashPlayer.setScore('##currentPID',PID)
 
         return value
     }
-    const PID = SetPID(1)
-    entity?.sendMessage('重置成功，重置前为'+PID)
+    const pid = setPID(1)
+    entity?.sendMessage('重置成功，重置前为'+pid)
 
 
     entity?.sendMessage('以前是以前✋ ，现在是现在✋ ，你要是一直拿以前当作现在✋ ，哥们，你怎么不拿你开新档的时候对比')

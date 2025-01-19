@@ -1,13 +1,11 @@
 import EventSignal from "./EventSignal"
-import type { EntityDeadByHurtEvent } from "../../@types/globalThis.d.ts";
-import { world } from "@minecraft/server";
+import type {EntityDeadByHurtEvent} from "../../@types/globalThis.d.ts";
+import {world} from "@minecraft/server";
 
 const entityDeadByHurt = new EventSignal<EntityDeadByHurtEvent>()
 
-
-
-world.afterEvents.entityHurt.subscribe(event=>
-  event.hurtEntity.getComponent("minecraft:health").currentValue<=0 && entityDeadByHurt.trigger(event)
+world.afterEvents.entityHurt.subscribe(event =>
+    event.hurtEntity.getComponent("minecraft:health").currentValue <= 0 && entityDeadByHurt.trigger(event)
 )
 
 /*
@@ -17,4 +15,4 @@ entityDeadByHurt.subscribe(event=>test(event))
 */
 
 
-export default  entityDeadByHurt
+export default entityDeadByHurt

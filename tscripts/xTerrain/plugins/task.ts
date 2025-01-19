@@ -1,6 +1,6 @@
 //@ts-nocheck
 import type { SimulatedPlayer } from '@minecraft/server-gametest'
-import {SimulatedPlayerEnum, testWorldLocation} from '../main'
+import {simulatedPlayerEnum, testWorldLocation} from '../main'
 import SIGN from '../../lib/xboyPackage/YumeSignEnum'
 import type { EntityHealthComponent, Vector3 } from '@minecraft/server'
 import { system, world } from '@minecraft/server'
@@ -14,15 +14,15 @@ const Vector_subtract = ({x,y,z}:Vector3, {x:u,y:v,z:w}:Vector3)=>({x:x-u,y:y-v,
 function AUTO_BEHAVIOR(){
 
     let SimulatedPlayerCount = 0
-    const AllPlayerCount = world.getAllPlayers().length
-    for (const index in SimulatedPlayerEnum) {
+    const allPlayerCount = world.getAllPlayers().length
+    for (const index in simulatedPlayerEnum) {
         if((Number(index)>0?Number(index):-Number(index))>1000)continue
 
-        const SimPlayer:SimulatedPlayer = <SimulatedPlayer>SimulatedPlayerEnum[index]
+        const SimPlayer:SimulatedPlayer = <SimulatedPlayer>simulatedPlayerEnum[index]
         //判假人是否存在
         if(!SimPlayer || !SimPlayer?.isValid?.()){
-            delete SimulatedPlayerEnum[SimulatedPlayerEnum[index]]
-            delete SimulatedPlayerEnum[index]
+            delete simulatedPlayerEnum[simulatedPlayerEnum[index]]
+            delete simulatedPlayerEnum[index]
             continue
         }
         ++SimulatedPlayerCount
@@ -82,7 +82,7 @@ function AUTO_BEHAVIOR(){
     }
 
     // /gamerule playerssleepingpercentage 50%
-    // SimulatedPlayerCount && world.getDimension('minecraft:overworld').runCommand('gamerule playerssleepingpercentage '+Math.floor(100*SimulatedPlayerCount/AllPlayerCount))
+    // SimulatedPlayerCount && world.getDimension('minecraft:overworld').runCommand('gamerule playerssleepingpercentage '+Math.floor(100*SimulatedPlayerCount/allPlayerCount))
 }
 
 system.runInterval(AUTO_BEHAVIOR,20)

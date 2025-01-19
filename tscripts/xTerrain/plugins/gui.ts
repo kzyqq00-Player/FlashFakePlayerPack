@@ -9,8 +9,7 @@ import SIGN, {
 } from '../../lib/xboyPackage/YumeSignEnum'
 import { ActionFormData } from '@minecraft/server-ui'
 import { SimulatedPlayer } from '@minecraft/server-gametest'
-import { getSimPlayer } from '../../lib/xboyPackage/Util'
-import { SimulatedPlayerEnum } from '../main'
+import { simulatedPlayerEnum } from '../main'
 
 // world.afterEvents.entityHitEntity.subscribe(({damagingEntity,hitEntity})=>{
 //     if(!damagingEntity || !hitEntity)return;
@@ -24,7 +23,7 @@ import { SimulatedPlayerEnum } from '../main'
 world.beforeEvents.playerInteractWithEntity.subscribe(e=>{
     const {player,target} = e
     if(!player || player.typeId!=='minecraft:player')return
-    if(!target || target.typeId!=='minecraft:player' || !SimulatedPlayerEnum[target.id])return// world.sendMessage('meow~ target');
+    if(!target || target.typeId!=='minecraft:player' || !simulatedPlayerEnum[target.id])return// world.sendMessage('meow~ target');
     const SimPlayer = <SimulatedPlayer><unknown>target // what's unknow?
     if(!SimPlayer)return
     e.cancel=true

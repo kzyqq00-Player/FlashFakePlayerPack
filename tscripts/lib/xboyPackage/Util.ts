@@ -38,23 +38,23 @@ export const getSimPlayer = {
 // }
 
 export function getEntitiesNear(location:Vector3, dimension:Dimension, maxDistance:number, Options={}){
-    const EntityQueryOption:EntityQueryOptions = {}//new EntityQueryOptions()
-    EntityQueryOption.maxDistance = maxDistance
-    EntityQueryOption.location    = location
-    EntityQueryOption.excludeTypes= ["minecraft:player","minecraft:arrow","minecraft:xp_orb","minecraft:item"]
-    EntityQueryOption.closest   = 1
-    Object.assign(EntityQueryOption,Options)
-    return dimension.getEntities(EntityQueryOption)
+    const entityQueryOptions:EntityQueryOptions = {}//new EntityQueryOptions()
+    entityQueryOptions.maxDistance = maxDistance
+    entityQueryOptions.location    = location
+    entityQueryOptions.excludeTypes= ["minecraft:player","minecraft:arrow","minecraft:xp_orb","minecraft:item"]
+    entityQueryOptions.closest   = 1
+    Object.assign(entityQueryOptions,Options)
+    return dimension.getEntities(entityQueryOptions)
 }
 export function getPlayerNear(who:Entity|Block, maxDistance:number, defEntityQueryOptions:EntityQueryOptions):Player[] {
-    const EQO: EntityQueryOptions = {}//new EntityQueryOptions()
-    EQO.maxDistance = maxDistance
-    EQO.location    = who.location
-    // EQO.excludeTypes= ["minecraft:arrow","minecraft:xp_orb","minecraft:item"]
-    EQO.closest   = 1
-    EQO.excludeTags = [SIGN.YUME_SIM_SIGN]
-    Object.assign(EQO,defEntityQueryOptions)
-    const entities = who.dimension.getPlayers(EQO)
+    const entityQueryOptions: EntityQueryOptions = {}//new EntityQueryOptions()
+    entityQueryOptions.maxDistance = maxDistance
+    entityQueryOptions.location    = who.location
+    // entityQueryOptions.excludeTypes= ["minecraft:arrow","minecraft:xp_orb","minecraft:item"]
+    entityQueryOptions.closest   = 1
+    entityQueryOptions.excludeTags = [SIGN.YUME_SIM_SIGN]
+    Object.assign(entityQueryOptions,defEntityQueryOptions)
+    const entities = who.dimension.getPlayers(entityQueryOptions)
     const targets:Player[] = []
     for(const entity of entities)targets.push(entity)
     return targets

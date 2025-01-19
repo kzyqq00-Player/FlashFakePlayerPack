@@ -1,17 +1,17 @@
 import {ScoreboardObjective, world} from '@minecraft/server'
-import   ScoreBase      from './rw'
+import   scoreBase      from './rw'
 
-let ScoreBaseSnapshot = <ScoreboardObjective[]>ScoreBase.GetObject()
+let ScoreBaseSnapshot = <ScoreboardObjective[]>scoreBase.getObject()
 
 const checkScoreObjectExist = (ScoreObjectName : string) : boolean =>  !!Array.from(ScoreBaseSnapshot).find(ScoreObject=>ScoreObjectName === ScoreObject.id)
 
 const verify = function(){
-    ScoreBaseSnapshot = <ScoreboardObjective[]>ScoreBase.GetObject();
+    ScoreBaseSnapshot = <ScoreboardObjective[]>scoreBase.getObject();
     ['##FlashPlayer##'].forEach(_=>
-        checkScoreObjectExist(_) || ScoreBase.NewObjectAsync(_).displayName
+        checkScoreObjectExist(_) || scoreBase.newObjectAsync(_).displayName
     )
 
-    world.scoreboard.getObjective('##FlashPlayer##').hasParticipant('##currentPID') || ScoreBase.SetPoints('##FlashPlayer##','##currentPID',1)
+    world.scoreboard.getObjective('##FlashPlayer##').hasParticipant('##currentPID') || scoreBase.setPoints('##FlashPlayer##','##currentPID',1)
 
 
 }

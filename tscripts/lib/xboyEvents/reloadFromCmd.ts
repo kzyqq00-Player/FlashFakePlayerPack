@@ -1,31 +1,31 @@
-import { Player, system, world } from "@minecraft/server"
+import {Player, system, world} from "@minecraft/server"
 import EventSignal from "./EventSignal"
-import type { reloadFromCmdEvent } from "../../@types/globalThis";
+import type {ReloadFromCmdEvent} from "../../@types/globalThis";
 
-
-class reloadFromCmdEvents extends EventSignal<reloadFromCmdEvent> {
+class ReloadFromCmdEvents extends EventSignal<ReloadFromCmdEvent> {
     players = new Set<Player["id"]>();
-    restart = ()=>{
+
+    restart() {
         this.players.clear()
-        world.getAllPlayers().forEach((_:Player)=>reloadFromCmd.players.add(_.id))
+        world.getAllPlayers().forEach((_: Player) => reloadFromCmd.players.add(_.id))
     }
 }
 
-const reloadFromCmd = new reloadFromCmdEvents()
+const reloadFromCmd = new ReloadFromCmdEvents()
 
 world.afterEvents.playerJoin.subscribe(
-    event=>reloadFromCmd.players.add(event.playerId)
+    event => reloadFromCmd.players.add(event.playerId)
 )
 
 
 world.afterEvents.playerLeave.subscribe(
-    event=>reloadFromCmd.players.delete(event.playerId)
+    event => reloadFromCmd.players.delete(event.playerId)
 )
 
-system.runInterval(()=>{
+system.runInterval(() => {
     const onlinePlayers = world.getAllPlayers()
     //
-    if(reloadFromCmd.players.size !== onlinePlayers.length || !onlinePlayers.every((_:Player)=>reloadFromCmd.players.has(_.id))){
+    if (reloadFromCmd.players.size !== onlinePlayers.length || !onlinePlayers.every((_: Player) => reloadFromCmd.players.has(_.id))) {
         reloadFromCmd.trigger(null)
         reloadFromCmd.restart()
     }
@@ -40,4 +40,4 @@ world.events.reloadFromCmd.subscribe(()=>{
 */
 
 
-export default  reloadFromCmd
+export default reloadFromCmd
