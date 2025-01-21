@@ -31,13 +31,14 @@ export function xyz_dododo(xyz:string[],playerLocation=[0,0,0]) : number[] {
         if(!Number.isFinite(data))
             throw new Error(['x','y','z'][index] + ' not a number')
 
+        let result: number
 
         if(op === '+')
-            data += playerLocation[index]
+            result = playerLocation[index] + data
         if(op === '-')
-            data = playerLocation[index] - data
+            result = playerLocation[index] - data
 
-        return data
+        return result
     });
 }
 
