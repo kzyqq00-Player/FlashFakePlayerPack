@@ -35,7 +35,7 @@ export function xyz_dododo(xyz:string[],playerLocation=[0,0,0]) : number[] {
         if(op === '+')
             data += playerLocation[index]
         if(op === '-')
-            data -= playerLocation[index]
+            data = playerLocation[index] - data
 
         return data
     });
