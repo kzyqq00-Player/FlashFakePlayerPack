@@ -7,7 +7,7 @@ const ops = {}
 ops['+'] = '+'
 ops['-'] = '-'
 
-export function xyz_dododo(xyz:string[],playerLocation=[0,0,0]) : number[] {
+export function xyz_dododo(xyz: string[], playerLocation = [0, 0, 0]): number[] {
     // 遍历分割后的数组
     return xyz.map((part, index) => {
         // 否则直接解析为数字
@@ -18,7 +18,7 @@ export function xyz_dododo(xyz:string[],playerLocation=[0,0,0]) : number[] {
             throw new Error(['x', 'y', 'z'][index] + ' not a number');
         }
 
-        let data: number|string = part.slice(1) // 去掉~
+        let data: number | string = part.slice(1) // 去掉~
         let op = ops[data[0]] // 存在风险
         // 如果以~开头，假设它是一个全局变量
         if (op === undefined) {
@@ -28,14 +28,14 @@ export function xyz_dododo(xyz:string[],playerLocation=[0,0,0]) : number[] {
         }
 
         data = Number(data)
-        if(!Number.isFinite(data))
-            throw new Error(['x','y','z'][index] + ' not a number')
+        if (!Number.isFinite(data))
+            throw new Error(['x', 'y', 'z'][index] + ' not a number')
 
         let result: number
 
-        if(op === '+')
+        if (op === '+')
             result = playerLocation[index] + data
-        if(op === '-')
+        if (op === '-')
             result = playerLocation[index] - data
 
         return result
@@ -47,15 +47,15 @@ function xyz_dododo_test() {
     const result1 = xyz_dododo(["1", "1", "1"]);
     console.log(result1); // [ 1, 1, 1 ]
 
-    const result2 = xyz_dododo(["1.1", "-20" ,"-30.2"]);
+    const result2 = xyz_dododo(["1.1", "-20", "-30.2"]);
     console.log(result2); // [ 1.1, -20, -30.2 ]
 
 
-    const result3 = xyz_dododo(["~2.2", "~+3" ,"~-4.5"]);
+    const result3 = xyz_dododo(["~2.2", "~+3", "~-4.5"]);
     console.log(result3); // [ 102.2, 203, -295.5 ]
 
 
-    const result4 = xyz_dododo(["~/2.2", "~+0" ,"~-"]);
+    const result4 = xyz_dododo(["~/2.2", "~+0", "~-"]);
     console.log(result4);
     // throw new Error(['x','y','z'][index] + ' not a number')
     // ^
