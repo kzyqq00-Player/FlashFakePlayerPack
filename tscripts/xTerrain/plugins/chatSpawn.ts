@@ -110,8 +110,7 @@ scriptEventRegistry.registerScriptEventHandler('ffp:ffpp',withArgs_xyz_name)
 
 // #56 参考：
 // 假人生成 x y z name 维度序号（数字 0-主世界 1-地狱 2-末地）
-function withArgs_xyz_name({args,location:commandLocation,entity}:CommandInfo) {
-    let location: Vector3 = null
+function withArgs_xyz_name({args,dimension,location,entity}:CommandInfo) {
     let nameTag : string = null
     if (args[1] === '批量' || args.length < 2) return
 
@@ -120,7 +119,7 @@ function withArgs_xyz_name({args,location:commandLocation,entity}:CommandInfo) {
         return entity?.sendMessage('[模拟玩家] 命令错误，期待三个坐标数字，得到个数为'+(args.length-1))
     try {
         const [argsX, argsY, argsZ] = args.slice(1, 4);
-        const { x: sourceX, y: sourceY, z: sourceZ } = commandLocation ?? entity.location;
+        const { x: sourceX, y: sourceY, z: sourceZ } = location ?? entity.location;
         const [x, y, z] = xyz_dododo([argsX, argsY, argsZ], [sourceX, sourceY, sourceZ]);
         location = { x, y, z }
         // 好烂，谁来改改
@@ -141,7 +140,6 @@ function withArgs_xyz_name({args,location:commandLocation,entity}:CommandInfo) {
     }
 
     // dimension
-    let dimension : Dimension;
     if (args.length >= 6) {
         try {
             dimension = world.getDimension(["overworld", "nether", "the end"][Number(args[5])])
