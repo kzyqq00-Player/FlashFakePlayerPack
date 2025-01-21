@@ -1,4 +1,4 @@
-import {Player, ScriptEventCommandMessageAfterEvent, ScriptEventSource, system, Vector3} from "@minecraft/server";
+import {Player, ScriptEventCommandMessageAfterEvent, ScriptEventSource, system, Vector3, type Dimension} from "@minecraft/server";
 import {cannotHandledExceptionWaringText, CommandInfo, commandParse, CommandRegistry} from "./CommandRegistry";
 
 type ScriptEventHandler = (event:CommandInfo) => void;
@@ -10,6 +10,10 @@ function getSourceLocation(e: ScriptEventCommandMessageAfterEvent): Vector3 {
             throw new TypeError('无法获取位置');
         }
     )();
+}
+
+function getSourceDimension(e: ScriptEventCommandMessageAfterEvent): Dimension {
+    return e.sourceEntity?.dimension ?? e.sourceBlock?.dimension;
 }
 
 function scriptEventArgsParse(
@@ -32,6 +36,7 @@ function getCommandInfo(e: ScriptEventCommandMessageAfterEvent): CommandInfo {
     return {
         args: scriptEventArgsParse(e),
         entity: e.sourceEntity instanceof Player ? e.sourceEntity : null,
+        dimension: getSourceDimension(e),
         location: getSourceLocation(e),
         isEntity: e.sourceType === ScriptEventSource.Entity,
     };

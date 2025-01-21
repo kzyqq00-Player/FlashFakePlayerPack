@@ -23,7 +23,7 @@ commandRegistry.registerAlias('Ffpp','假人生成')
 
 const scriptEventRegistry = new ScriptEventRegistry()
 
-function noArgs({args,entity,location,isEntity}:CommandInfo) {
+function noArgs({args,entity,dimension,location,isEntity}:CommandInfo) {
     // @ts-ignore
     if(!initSucceed)
         return entity?.sendMessage('[假人] 插件未初始化完成，请重试')
@@ -33,7 +33,7 @@ function noArgs({args,entity,location,isEntity}:CommandInfo) {
     if(isEntity){
         const PID = GetPID()
         const __FlashPlayer__ = world.scoreboard.getObjective('##FlashPlayer##')
-        const SimulatedPlayer :SimulatedPlayer = spawnSimulatedPlayer(entity.location,entity.dimension,PID)
+        const SimulatedPlayer :SimulatedPlayer = spawnSimulatedPlayer(entity.location,dimension??entity.dimension,PID)
 
 
 
@@ -51,7 +51,7 @@ function noArgs({args,entity,location,isEntity}:CommandInfo) {
     }else {
         const PID = GetPID()
         const __FlashPlayer__ = world.scoreboard.getObjective('##FlashPlayer##')
-        const SimulatedPlayer :SimulatedPlayer= spawnSimulatedPlayer(location,entity.dimension,PID)
+        const SimulatedPlayer :SimulatedPlayer= spawnSimulatedPlayer(location,dimension??entity.dimension,PID)
 
 
 
@@ -77,7 +77,7 @@ function withArgs({args,entity,location,isEntity}:CommandInfo) {
         if(isEntity){
             const PID = GetPID()
             const __FlashPlayer__ = world.scoreboard.getObjective('##FlashPlayer##')
-            const SimulatedPlayer :SimulatedPlayer = spawnSimulatedPlayer(entity.location,entity.dimension,PID)
+            const SimulatedPlayer :SimulatedPlayer = spawnSimulatedPlayer(entity.location,dimension??entity.dimension,PID)
 
 
 
@@ -91,7 +91,7 @@ function withArgs({args,entity,location,isEntity}:CommandInfo) {
         }else {
             const PID = GetPID()
             const __FlashPlayer__ = world.scoreboard.getObjective('##FlashPlayer##')
-            const SimulatedPlayer :SimulatedPlayer= spawnSimulatedPlayer(location,entity.dimension,PID)
+            const SimulatedPlayer :SimulatedPlayer= spawnSimulatedPlayer(location,dimension??entity.dimension,PID)
 
 
 

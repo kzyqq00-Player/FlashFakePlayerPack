@@ -1,12 +1,13 @@
-import {Player, Vector3} from "@minecraft/server";
+import {Player, Vector3, type Dimension} from "@minecraft/server";
 import type {SimulatedPlayer} from "@minecraft/server-gametest";
 
 export interface CommandInfo {
-    args: string[],
-    entity?: Player,
-    location?: Vector3,
-    isEntity?: boolean,
-    sim?: SimulatedPlayer
+    args: string[];
+    entity?: Player;
+    location?: Vector3;
+    dimension?: Dimension;
+    isEntity?: boolean;
+    sim?: SimulatedPlayer;
 } // | Player | Dimension | Entity
 export type CommandInfoNoArgs = Omit<CommandInfo, "args">;
 
